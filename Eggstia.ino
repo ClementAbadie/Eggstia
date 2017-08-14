@@ -45,7 +45,6 @@ enum LED_STATUS_t {
 
 
 
-
 LED_STATUS_t led_status = LED_STATUS_TEMPERATURE_e;
 LED_STATUS_t led_status_old = led_status;
 
@@ -90,10 +89,10 @@ void loop_RGB_LED(){
 				RGB_LED_display_value_RGB(value_humidity, (float) THRESHOLD_HUMIDITY_MIN, (float) THRESHOLD_HUMIDITY_MAX);
 				break;
 			case LED_STATUS_AIRNOTE_e:
-				RGB_LED_display_value_RGB(value_airNote, (float) THRESHOLD_NOTE_MIN, (float) THRESHOLD_NOTE_MAX);
+				RGB_LED_display_value(value_airNote, (float) THRESHOLD_NOTE_MIN, (float) THRESHOLD_NOTE_MAX, LED_COLOR_R_e, LED_COLOR_G_e);
 				break;
 			case LED_STATUS_GLOBAL_NOTE_e:
-				RGB_LED_display_value_RGB(tools_GlobalNoteCalculator(), (float) THRESHOLD_NOTE_MIN, (float) THRESHOLD_NOTE_MAX);
+				RGB_LED_display_value(tools_GlobalNoteCalculator(), (float) THRESHOLD_NOTE_MIN, (float) THRESHOLD_NOTE_MAX, LED_COLOR_R_e,LED_COLOR_G_e);
 				break;
 			default:
 				// Code
@@ -108,7 +107,9 @@ void loop_RGB_LED(){
 				break;
 		}
 	}
-	else if ((timeout_led < RGB_LED_SHOW_BLACK_TIME) || (timeout_led < 3 * RGB_LED_SHOW_BLACK_TIME && timeout_led > 2 * RGB_LED_SHOW_BLACK_TIME ))
+	else if ((timeout_led < RGB_LED_SHOW_BLACK_TIME)
+			|| (timeout_led < 3 * RGB_LED_SHOW_BLACK_TIME && timeout_led > 2 * RGB_LED_SHOW_BLACK_TIME )
+			|| (timeout_led > RGB_LED_SHOW_MODE_TIME + 2 * RGB_LED_SHOW_BLACK_TIME))
 	{
 		RGB_LED_set_black();
 	}
@@ -147,23 +148,27 @@ void loop_dataSend(){
 
 
 int tools_GlobalNoteCalculator(){
+
+	//TODO : Note calcul of hum and temp : MED is the best
 	int VALUE_TEMPERATURE_255 =  ( (int) value_temperature - THRESHOLD_TEMPERATURE_MIN ) * 255 / THRESHOLD_TEMPERATURE_MAX;
 	int VALUE_HUMIDITY_255 =  ( (int) value_humidity - THRESHOLD_HUMIDITY_MIN ) * 255 / THRESHOLD_HUMIDITY_MAX;
 	int VALUE_AIR_NOTE_255 =  ( (int) value_airNote - THRESHOLD_NOTE_MIN ) * 255 / THRESHOLD_NOTE_MAX;
 
 	int VALUE_GLOBAL_NOTE_255 =  (VALUE_TEMPERATURE_255 + VALUE_HUMIDITY_255 + VALUE_AIR_NOTE_255)/3;
 
+	int VALUE_GLOBAL_NOTE =  VALUE_GLOBAL_NOTE_255 * 10 / 255;
+
 #ifdef DEBUG
 	Serial.print("Global Note : ");
 	Serial.print(VALUE_GLOBAL_NOTE_255);
 	Serial.print("(");
-	Serial.print(VALUE_GLOBAL_NOTE_255 * 1000 / 255);
+	Serial.print(VALUE_GLOBAL_NOTE);
 	Serial.print("/");
 	Serial.print(THRESHOLD_NOTE_MAX);
 	Serial.println(")");
 #endif
 
-	return VALUE_GLOBAL_NOTE_255;
+	return VALUE_GLOBAL_NOTE;
 
 }
 
@@ -194,12 +199,14 @@ void setup()
 	setup_HTU21D();
 	setup_capacitiveSensor();
 
+	loop_readingSensors();
+
 	thread_readingSensors.enabled = true;
 	thread_readingUserInteract.enabled = true;
 	thread_settingLED.enabled = true;
 	thread_dataSend.enabled = true;
 
-	thread_readingSensors.setInterval(1000);
+	thread_readingSensors.setInterval(10000);
 	thread_readingUserInteract.setInterval(1);
 	thread_settingLED.setInterval(1);
 	thread_dataSend.setInterval(1000);

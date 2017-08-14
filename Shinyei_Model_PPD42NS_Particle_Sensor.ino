@@ -19,13 +19,10 @@
 
 void loop_PPD42NS() {
 
-
-
-
-
 	duration = pulseIn(pin, LOW);
 	lowpulseoccupancy = lowpulseoccupancy+duration;
 	currenttime = millis()-starttime;
+
 #ifdef DEBUG
 		Serial.print("PPD42NS_loop ( currenttime : ");
 		Serial.print(currenttime);

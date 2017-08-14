@@ -94,9 +94,9 @@ void RGB_LED_display_value_RGB(float VALUE, float MIN, float MAX){
 	// Scaling
 	// Reverse logic
 	int VALUE_255 = 0;
-	int R;
-	int G;
-	int B;
+	int R = 0;
+	int G = 0;
+	int B = 0;
 
 	float MED = (MAX + MIN) / 2;
 
