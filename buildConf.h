@@ -8,7 +8,7 @@
 #ifndef BUILDCONF_H_
 #define BUILDCONF_H_
 
-#define DEBUG
+//#define DEBUG
 
 //#define TEST
 

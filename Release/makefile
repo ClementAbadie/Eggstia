@@ -55,7 +55,7 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 AR += \
-D:\Dev\Arduino\Sloeber\Eggstia\Release\arduino.ar \
+D:\Dev\Git\Eggstia\Release\arduino.ar \
 
 ELF += \
 Eggstia.elf \
@@ -71,19 +71,19 @@ all: Eggstia
 Eggstia: $(HEX)
 	@echo 'Building target: $@'
 	@echo 'Printing size:'
-	"C:\Program Files\sloeber\/arduinoPlugin/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/bin/avr-size" -A "D:/Dev/Arduino/Sloeber/Eggstia/Release/Eggstia.elf"
+	"C:\Program Files\sloeber\/arduinoPlugin/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/bin/avr-size" -A "D:/Dev/Git/Eggstia/Release/Eggstia.elf"
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-D:\Dev\Arduino\Sloeber\Eggstia\Release\arduino.ar: $(AR_OBJ)
+D:\Dev\Git\Eggstia\Release\arduino.ar: $(AR_OBJ)
 	@echo 'Starting archiver'
-	"C:\Program Files\sloeber\/arduinoPlugin/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/bin/avr-gcc-ar" rcs    D:/Dev/Arduino/Sloeber/Eggstia/Release/arduino.ar $(AR_OBJ)
+	"C:\Program Files\sloeber\/arduinoPlugin/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/bin/avr-gcc-ar" rcs    D:/Dev/Git/Eggstia/Release/arduino.ar $(AR_OBJ)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 Eggstia.elf: $(LINK_OBJ) $(AR)
 	@echo 'Starting combiner'
-	"C:\Program Files\sloeber\/arduinoPlugin/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/bin/avr-gcc" -Wall -Wextra -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu=atmega32u4 -o "D:\Dev\Arduino\Sloeber\Eggstia/Release/Eggstia.elf"   $(LINK_OBJ)   D:/Dev/Arduino/Sloeber/Eggstia/Release/arduino.ar  "-LD:\Dev\Arduino\Sloeber\Eggstia/Release" -lm
+	"C:\Program Files\sloeber\/arduinoPlugin/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/bin/avr-gcc" -Wall -Wextra -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu=atmega32u4 -o "D:\Dev\Git\Eggstia/Release/Eggstia.elf"   $(LINK_OBJ)   D:/Dev/Git/Eggstia/Release/arduino.ar  "-LD:\Dev\Git\Eggstia/Release" -lm
 	@echo 'Finished building: $@'
 	@echo ' '
 

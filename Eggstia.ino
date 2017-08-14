@@ -19,6 +19,11 @@
 #define THRESHOLD_NOTE_MIN 0
 #define THRESHOLD_NOTE_MAX 10
 
+// LED mode change times
+
+#define RGB_LED_SHOW_MODE_TIME 1000
+#define RGB_LED_SHOW_BLACK_TIME 100
+
 // THREADS
 
 #define THREAD_DEFAULT_INTERVAL 10
@@ -42,6 +47,7 @@ enum LED_STATUS_t {
 
 
 LED_STATUS_t led_status = LED_STATUS_TEMPERATURE_e;
+LED_STATUS_t led_status_old = led_status;
 
 
 void loop_readingSensors(){
@@ -60,42 +66,77 @@ void loop_readingUserInteract(){
 	loop_capacitiveSensor();
 }
 
-void loop_settingLED(){
+void loop_RGB_LED(){
 #ifdef DEBUG
-	Serial.println("loop_settingLED");
+	Serial.println("loop_RGB_LED");
 #endif
-	switch ( switch_status ) {
-	case SWITCH_STATUS_ON_e:
-		switch ( led_status ) {
-		case LED_STATUS_TEMPERATURE_e:
-			RGB_LED_display_value_RGB(value_temperature, (float) THRESHOLD_TEMPERATURE_MIN, (float) THRESHOLD_TEMPERATURE_MAX);
-		  break;
-		case LED_STATUS_HUMIDITY_e:
-			RGB_LED_display_value_RGB(value_humidity, (float) THRESHOLD_HUMIDITY_MIN, (float) THRESHOLD_HUMIDITY_MAX);
-		  break;
-		case LED_STATUS_AIRNOTE_e:
-			RGB_LED_display_value_RGB(value_airNote, (float) 0.0, (float) 10.0);
-		  break;
-		case LED_STATUS_GLOBAL_NOTE_e:
-			RGB_LED_display_value_RGB(tools_GlobalNoteCalculator(), (float) 0.0, (float) 10.0);
-		  break;
-		default:
-		  // Code
-		  break;
-		}
-	  break;
-	case SWITCH_STATUS_OFF_e:
-			RGB_LED_set_black();
-	  break;
-	default:
-	  // Code
-	  break;
+
+	if(led_status != led_status_old)
+	{
+		led_status_old = led_status;
+		timeout_led = RGB_LED_SHOW_MODE_TIME + 3 * RGB_LED_SHOW_BLACK_TIME;
 	}
 
+	if(timeout_led == 0)
+	{
 
-
-
+		switch ( switch_status ) {
+		case SWITCH_STATUS_ON_e:
+			switch ( led_status ) {
+			case LED_STATUS_TEMPERATURE_e:
+				RGB_LED_display_value_RGB(value_temperature, (float) THRESHOLD_TEMPERATURE_MIN, (float) THRESHOLD_TEMPERATURE_MAX);
+				break;
+			case LED_STATUS_HUMIDITY_e:
+				RGB_LED_display_value_RGB(value_humidity, (float) THRESHOLD_HUMIDITY_MIN, (float) THRESHOLD_HUMIDITY_MAX);
+				break;
+			case LED_STATUS_AIRNOTE_e:
+				RGB_LED_display_value_RGB(value_airNote, (float) THRESHOLD_NOTE_MIN, (float) THRESHOLD_NOTE_MAX);
+				break;
+			case LED_STATUS_GLOBAL_NOTE_e:
+				RGB_LED_display_value_RGB(tools_GlobalNoteCalculator(), (float) THRESHOLD_NOTE_MIN, (float) THRESHOLD_NOTE_MAX);
+				break;
+			default:
+				// Code
+				break;
+			}
+			break;
+			case SWITCH_STATUS_OFF_e:
+				RGB_LED_set_black();
+				break;
+			default:
+				// Code
+				break;
+		}
+	}
+	else if ((timeout_led < RGB_LED_SHOW_BLACK_TIME) || (timeout_led < 3 * RGB_LED_SHOW_BLACK_TIME && timeout_led > 2 * RGB_LED_SHOW_BLACK_TIME ))
+	{
+		RGB_LED_set_black();
+	}
+	else
+	{
+		switch ( led_status ) {
+		case LED_STATUS_TEMPERATURE_e:
+			RGB_LED_set_red();
+			break;
+		case LED_STATUS_HUMIDITY_e:
+			RGB_LED_set_blue();
+			break;
+		case LED_STATUS_AIRNOTE_e:
+			RGB_LED_set_green();
+			break;
+		case LED_STATUS_GLOBAL_NOTE_e:
+			RGB_LED_set_white();
+			break;
+		default:
+			// Code
+			break;
+		}
+	}
 }
+
+
+
+
 
 void loop_dataSend(){
 #ifdef DEBUG
@@ -110,7 +151,19 @@ int tools_GlobalNoteCalculator(){
 	int VALUE_HUMIDITY_255 =  ( (int) value_humidity - THRESHOLD_HUMIDITY_MIN ) * 255 / THRESHOLD_HUMIDITY_MAX;
 	int VALUE_AIR_NOTE_255 =  ( (int) value_airNote - THRESHOLD_NOTE_MIN ) * 255 / THRESHOLD_NOTE_MAX;
 
-	return (VALUE_TEMPERATURE_255 + VALUE_TEMPERATURE_255 + VALUE_TEMPERATURE_255)/3;
+	int VALUE_GLOBAL_NOTE_255 =  (VALUE_TEMPERATURE_255 + VALUE_HUMIDITY_255 + VALUE_AIR_NOTE_255)/3;
+
+#ifdef DEBUG
+	Serial.print("Global Note : ");
+	Serial.print(VALUE_GLOBAL_NOTE_255);
+	Serial.print("(");
+	Serial.print(VALUE_GLOBAL_NOTE_255 * 1000 / 255);
+	Serial.print("/");
+	Serial.print(THRESHOLD_NOTE_MAX);
+	Serial.println(")");
+#endif
+
+	return VALUE_GLOBAL_NOTE_255;
 
 }
 
@@ -135,7 +188,7 @@ void setup()
 	setup_RGB_LED();
 
 	RGB_LED_set_blue();
-	delay(3000);
+	delay(1000);
 
 	setup_timer();
 	setup_HTU21D();
@@ -154,7 +207,7 @@ void setup()
 
 	thread_readingSensors.onRun(loop_readingSensors);
 	thread_readingUserInteract.onRun(loop_readingUserInteract);
-	thread_settingLED.onRun(loop_settingLED);
+	thread_settingLED.onRun(loop_RGB_LED);
 	thread_dataSend.onRun(loop_dataSend);
 
 	threadController.add(&thread_readingSensors);
@@ -165,13 +218,13 @@ void setup()
 
 
 	RGB_LED_set_black();
-	delay(200);
+	delay(RGB_LED_SHOW_BLACK_TIME);
 	RGB_LED_set_green();
-	delay(100);
+	delay(RGB_LED_SHOW_BLACK_TIME);
 	RGB_LED_set_black();
-	delay(100);
+	delay(RGB_LED_SHOW_BLACK_TIME);
 	RGB_LED_set_green();
-	delay(100);
+	delay(RGB_LED_SHOW_BLACK_TIME);
 	RGB_LED_set_black();
 
 
@@ -185,7 +238,8 @@ void loop()
 {
 	//Add your repeated code here
 #ifdef DEBUG
-	//Serial.println("loop_main");
+	Serial.println("loop_main");
+	delay(100);
 #endif
 
 #ifdef TEST
@@ -195,6 +249,7 @@ void loop()
 	threadController.run();
 #endif
 
-//	delay(100);
+
+
 
 }
