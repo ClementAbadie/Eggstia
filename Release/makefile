@@ -10,6 +10,8 @@ RM := del
 -include sources.mk
 -include subdir.mk
 -include libraries\Wire\subdir.mk
+-include libraries\ESP8266WiFi\src\subdir.mk
+-include libraries\ESP8266HTTPClient\src\subdir.mk
 -include libraries\CapacitiveSensor\subdir.mk
 -include libraries\ArduinoThread\subdir.mk
 -include libraries\Adafruit_HTU21DF_Library\subdir.mk

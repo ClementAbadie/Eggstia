@@ -25,6 +25,10 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/Adafruit_HTU21DF_Library}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/CapacitiveSensor}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ArduinoThread}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266HTTPClient}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266HTTPClient/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266WiFi/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.cpp.sketch.input.1316730104" name="CPP source files" superClass="io.sloeber.compiler.cpp.sketch.input"/>
 							</tool>
@@ -36,6 +40,10 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/Adafruit_HTU21DF_Library}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/CapacitiveSensor}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ArduinoThread}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266HTTPClient}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266HTTPClient/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266WiFi/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.c.sketch.input.938898829" name="C Source Files" superClass="io.sloeber.compiler.c.sketch.input"/>
 							</tool>
@@ -47,6 +55,10 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/Adafruit_HTU21DF_Library}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/CapacitiveSensor}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ArduinoThread}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266HTTPClient}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266HTTPClient/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Eggstia/libraries/ESP8266WiFi/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.S.sketch.input.1035812160" name="Assembly source files" superClass="io.sloeber.compiler.S.sketch.input"/>
 							</tool>

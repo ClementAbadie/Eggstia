@@ -42,5 +42,7 @@ core/core/umm_malloc \
 libraries/Adafruit_HTU21DF_Library \
 libraries/ArduinoThread \
 libraries/CapacitiveSensor \
+libraries/ESP8266HTTPClient/src \
+libraries/ESP8266WiFi/src \
 libraries/Wire \
 

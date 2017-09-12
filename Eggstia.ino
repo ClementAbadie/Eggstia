@@ -2,8 +2,10 @@
 #include "Thread.h"
 #include "ThreadController.h"
 #include "StaticThreadController.h"
+#include "Wire.h"
 
 #include "buildConf.h"
+#include "myWifi.h"
 #include "RGB_LED.h"
 #include "Shinyei_Model_PPD42NS_Particle_Sensor.h"
 #include "HTU21D_Humidity_Temperature.h"
@@ -144,6 +146,9 @@ void loop_dataSend(){
 #ifdef DEBUG
 	Serial.println("loop_dataSend");
 #endif
+
+	loop_datasend(JEEDOM_VIRTUAL_TEMPERATURE_ID,value_temperature);
+	loop_datasend(JEEDOM_VIRTUAL_HUMIDITY_ID,value_humidity);
 }
 
 void loop_timer(){
@@ -188,7 +193,8 @@ void setup()
 
 #ifdef DEBUG
 	Serial.begin(115200);
-
+	Serial.println("");
+	Serial.println("");
 	Serial.println("Project : Eggstia");
 	Serial.print("Build : ");
 	Serial.print(__TIME__);
@@ -197,15 +203,16 @@ void setup()
 	Serial.println("Setting up...");
 #endif
 
+	Wire.pins(5, 4);
 
-	setup_RGB_LED();
+	//setup_RGB_LED();
 
-	RGB_LED_set_blue();
-	delay(1000);
+	//RGB_LED_set_blue();
+	//delay(1000);
 
-	setup_timer();
+
 	setup_HTU21D();
-	setup_capacitiveSensor();
+	//setup_capacitiveSensor();
 
 	loop_readingSensors();
 
@@ -218,33 +225,33 @@ void setup()
 	thread_readingSensors.setInterval(10000);
 	thread_readingUserInteract.setInterval(1);
 	thread_settingLED.setInterval(1);
-	thread_dataSend.setInterval(1000);
+	thread_dataSend.setInterval(60 * 1000);
 	thread_timer.setInterval(1000);
 
 
+	thread_timer.onRun(loop_timer);
 	thread_readingSensors.onRun(loop_readingSensors);
 	thread_readingUserInteract.onRun(loop_readingUserInteract);
 	thread_settingLED.onRun(loop_RGB_LED);
 	thread_dataSend.onRun(loop_dataSend);
-	thread_timer.onRun(loop_timer);
 
-	threadController.add(&thread_readingSensors);
-	threadController.add(&thread_readingUserInteract);
-	threadController.add(&thread_settingLED);
-	threadController.add(&thread_dataSend);
 	threadController.add(&thread_timer);
+	threadController.add(&thread_readingSensors);
+//	threadController.add(&thread_readingUserInteract);
+//	threadController.add(&thread_settingLED);
+	threadController.add(&thread_dataSend);
 
 
 
-	RGB_LED_set_black();
-	delay(RGB_LED_SHOW_BLACK_TIME);
-	RGB_LED_set_green();
-	delay(RGB_LED_SHOW_BLACK_TIME);
-	RGB_LED_set_black();
-	delay(RGB_LED_SHOW_BLACK_TIME);
-	RGB_LED_set_green();
-	delay(RGB_LED_SHOW_BLACK_TIME);
-	RGB_LED_set_black();
+//	RGB_LED_set_black();
+//	delay(RGB_LED_SHOW_BLACK_TIME);
+//	RGB_LED_set_green();
+//	delay(RGB_LED_SHOW_BLACK_TIME);
+//	RGB_LED_set_black();
+//	delay(RGB_LED_SHOW_BLACK_TIME);
+//	RGB_LED_set_green();
+//	delay(RGB_LED_SHOW_BLACK_TIME);
+//	RGB_LED_set_black();
 
 
 #ifdef DEBUG
@@ -257,8 +264,8 @@ void loop()
 {
 	//Add your repeated code here
 #ifdef DEBUG
-	Serial.println("loop_main");
-	delay(100);
+	//Serial.println("loop_main");
+	//delay(100);
 #endif
 
 #ifdef TEST
@@ -267,8 +274,4 @@ void loop()
 #else
 	threadController.run();
 #endif
-
-
-
-
 }

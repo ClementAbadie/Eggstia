@@ -57,6 +57,16 @@
 			<locationURI>ECLIPSE_HOME/arduinoPlugin/libraries/CapacitiveSensor/0.5.1</locationURI>
 		</link>
 		<link>
+			<name>libraries/ESP8266HTTPClient</name>
+			<type>2</type>
+			<locationURI>ECLIPSE_HOME/arduinoPlugin/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266HTTPClient</locationURI>
+		</link>
+		<link>
+			<name>libraries/ESP8266WiFi</name>
+			<type>2</type>
+			<locationURI>ECLIPSE_HOME/arduinoPlugin/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi</locationURI>
+		</link>
+		<link>
 			<name>libraries/Wire</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/arduinoPlugin/packages/esp8266/hardware/esp8266/2.3.0/libraries/Wire</locationURI>

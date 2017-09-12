@@ -2,14 +2,16 @@
 //This is a automatic generated file
 //Please do not modify this file
 //If you touch this file your change will be overwritten during the next build
-//This file has been generated on 2017-09-11 18:29:08
+//This file has been generated on 2017-09-12 12:17:23
 
 #include "Arduino.h"
 #include "Arduino.h"
 #include "Thread.h"
 #include "ThreadController.h"
 #include "StaticThreadController.h"
+#include "Wire.h"
 #include "buildConf.h"
+#include "myWifi.h"
 #include "RGB_LED.h"
 #include "Shinyei_Model_PPD42NS_Particle_Sensor.h"
 #include "HTU21D_Humidity_Temperature.h"
@@ -21,6 +23,7 @@
 #include "capacitiveTouch.h"
 #include "myTimer.h"
 #include "myTimer.h"
+#include "myWifi.h"
 
 void loop_readingSensors();
 void loop_readingUserInteract();
@@ -53,6 +56,8 @@ void capacitiveSensor_shortTouch() ;
 void capacitiveSensor_longTouch() ;
 void setup_timer() ;
 void callback_timer() ;
+void setup_wifi() ;
+void loop_datasend(int virtual_device_ID, float virtual_device_value) ;
 
 #include "Eggstia.ino"
 
@@ -62,5 +67,6 @@ void callback_timer() ;
 #include "buildConf.ino"
 #include "capacitiveTouch.ino"
 #include "myTimer.ino"
+#include "myWifi.ino"
 
 #endif

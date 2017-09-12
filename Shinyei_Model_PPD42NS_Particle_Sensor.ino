@@ -24,14 +24,14 @@ void loop_PPD42NS() {
 	currenttime = millis()-starttime;
 
 #ifdef DEBUG
-		Serial.print("PPD42NS_loop ( currenttime : ");
+		Serial.print("loop_PPD42NS ( currenttime : ");
 		Serial.print(currenttime);
 		Serial.print(" / ");
 		Serial.print(sampletime_ms);
 		Serial.println(" )");
 #endif
 
-	if ( currenttime > sampletime_ms)
+	if ( currenttime > sampletime_ms )
 	{
 		ratio = lowpulseoccupancy/(sampletime_ms*10.0);  // Integer percentage 0=>100
 		value_airConcentration = 1.1*pow(ratio,3)-3.8*pow(ratio,2)+520*ratio+0.62; // using spec sheet curve
@@ -55,4 +55,5 @@ void loop_PPD42NS() {
 
 
 	}
+
 }
