@@ -36,10 +36,11 @@ CPP_DEPS :=
 SUBDIRS := \
 . \
 core/core \
+core/core/libb64 \
+core/core/spiffs \
+core/core/umm_malloc \
 libraries/Adafruit_HTU21DF_Library \
 libraries/ArduinoThread \
 libraries/CapacitiveSensor \
-libraries/TimerOne \
-libraries/Wire/src \
-libraries/Wire/src/utility \
+libraries/Wire \
 

@@ -8,7 +8,7 @@
 #ifndef MYTIMER_H_
 #define MYTIMER_H_
 
-#include <TimerOne.h>
+//#include <TimerThree.h>
 
 void setup_timer();
 

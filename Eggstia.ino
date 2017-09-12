@@ -33,6 +33,7 @@ Thread thread_readingSensors = Thread();
 Thread thread_readingUserInteract = Thread();
 Thread thread_settingLED = Thread();
 Thread thread_dataSend = Thread();
+Thread thread_timer = Thread();
 
 ThreadController threadController = ThreadController();
 
@@ -145,6 +146,13 @@ void loop_dataSend(){
 #endif
 }
 
+void loop_timer(){
+#ifdef DEBUG
+	Serial.println("loop_timer");
+#endif
+	callback_timer();
+}
+
 
 
 int tools_GlobalNoteCalculator(){
@@ -179,7 +187,7 @@ void setup()
 	// Add your initialization code here
 
 #ifdef DEBUG
-	Serial.begin(9600);
+	Serial.begin(115200);
 
 	Serial.println("Project : Eggstia");
 	Serial.print("Build : ");
@@ -205,22 +213,26 @@ void setup()
 	thread_readingUserInteract.enabled = true;
 	thread_settingLED.enabled = true;
 	thread_dataSend.enabled = true;
+	thread_timer.enabled = true;
 
 	thread_readingSensors.setInterval(10000);
 	thread_readingUserInteract.setInterval(1);
 	thread_settingLED.setInterval(1);
 	thread_dataSend.setInterval(1000);
+	thread_timer.setInterval(1000);
 
 
 	thread_readingSensors.onRun(loop_readingSensors);
 	thread_readingUserInteract.onRun(loop_readingUserInteract);
 	thread_settingLED.onRun(loop_RGB_LED);
 	thread_dataSend.onRun(loop_dataSend);
+	thread_timer.onRun(loop_timer);
 
 	threadController.add(&thread_readingSensors);
 	threadController.add(&thread_readingUserInteract);
 	threadController.add(&thread_settingLED);
 	threadController.add(&thread_dataSend);
+	threadController.add(&thread_timer);
 
 
 
