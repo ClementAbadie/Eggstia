@@ -26,15 +26,32 @@ void setup_wifi() {
 	Serial.println("IP address: ");
 	Serial.println(WiFi.localIP());
 
+
+
 }
 
 void loop_datasend(int virtual_device_ID, float virtual_device_value)
 {
+
+	int wifi_connected = WiFi.isConnected();
+/*
+	Serial.print("WiFi isConnected : ");
+	Serial.println(WiFi.isConnected());
+	Serial.print("WiFi status : ");
+	Serial.println(WiFi.status());
+*/
+
+	if(!wifi_connected){
+		setup_wifi();
+	}
+
 	HTTPClient http;    //Declare object of class HTTPClient
 
-	String url = 	"http://" + host + "/core/api/jeeApi.php?apikey=" + JEEDOM_API +
+	String url = 	"http://" + JEEDOM_HOST + "/core/api/jeeApi.php?apikey=" + JEEDOM_API +
 					"&type=virtual&id=" + String(virtual_device_ID) +
 					"&value=" + String(virtual_device_value);
+
+	Serial.println(url);
 
 	http.begin(url);      //Specify request destination
 	http.addHeader("Content-Type", "text/plain");  //Specify content-type header

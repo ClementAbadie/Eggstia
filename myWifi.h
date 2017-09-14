@@ -15,12 +15,7 @@
 const char* ssid = "SFR-e170";
 const char* password = "QY3XW4EDHDU4";
 
-String JEEDOM_API = "a14ntHuYmR95rkEY0eJAPwE4dMcEOlpB4j6B1XgKEDSbxWhR";
 
-String host = "192.168.0.190";
-
-int JEEDOM_VIRTUAL_TEMPERATURE_ID = 227;
-int JEEDOM_VIRTUAL_HUMIDITY_ID = 228;
 
 void setup_wifi();
 

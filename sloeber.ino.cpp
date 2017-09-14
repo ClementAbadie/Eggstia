@@ -2,7 +2,7 @@
 //This is a automatic generated file
 //Please do not modify this file
 //If you touch this file your change will be overwritten during the next build
-//This file has been generated on 2017-09-12 12:17:23
+//This file has been generated on 2017-09-14 08:10:53
 
 #include "Arduino.h"
 #include "Arduino.h"
@@ -22,6 +22,7 @@
 #include "buildConf.h"
 #include "capacitiveTouch.h"
 #include "myTimer.h"
+#include "jeedom.h"
 #include "myTimer.h"
 #include "myWifi.h"
 
@@ -54,6 +55,7 @@ void setup_capacitiveSensor() ;
 void loop_capacitiveSensor() ;
 void capacitiveSensor_shortTouch() ;
 void capacitiveSensor_longTouch() ;
+void setJeedom(int ROOM) ;
 void setup_timer() ;
 void callback_timer() ;
 void setup_wifi() ;
@@ -66,6 +68,7 @@ void loop_datasend(int virtual_device_ID, float virtual_device_value) ;
 #include "Shinyei_Model_PPD42NS_Particle_Sensor.ino"
 #include "buildConf.ino"
 #include "capacitiveTouch.ino"
+#include "jeedom.ino"
 #include "myTimer.ino"
 #include "myWifi.ino"
 

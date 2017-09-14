@@ -8,7 +8,8 @@
 #ifndef SHINYEI_MODEL_PPD42NS_PARTICULE_SENSOR_H_
 #define SHINYEI_MODEL_PPD42NS_PARTICULE_SENSOR_H_
 
-int pin = 8;
+int pin = 0;
+
 unsigned long duration;
 unsigned long starttime;
 unsigned long currenttime;

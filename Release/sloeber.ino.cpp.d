@@ -62,9 +62,10 @@ sloeber.ino.cpp.o: ..\sloeber.ino.cpp \
  C:\Program\ Files\sloeber\arduinoPlugin\libraries\Adafruit_HTU21DF_Library\1.0.1/Adafruit_HTU21DF.h \
  ..\capacitiveTouch.h \
  C:\Program\ Files\sloeber\arduinoPlugin\libraries\CapacitiveSensor\0.5.1/CapacitiveSensor.h \
- ..\myTimer.h ..\Eggstia.ino ..\HTU21D_Humidity_Temperature.ino \
- ..\RGB_LED.ino ..\Shinyei_Model_PPD42NS_Particle_Sensor.ino \
- ..\buildConf.ino ..\capacitiveTouch.ino ..\myTimer.ino ..\myWifi.ino
+ ..\myTimer.h ..\jeedom.h ..\Eggstia.ino \
+ ..\HTU21D_Humidity_Temperature.ino ..\RGB_LED.ino \
+ ..\Shinyei_Model_PPD42NS_Particle_Sensor.ino ..\buildConf.ino \
+ ..\capacitiveTouch.ino ..\jeedom.ino ..\myTimer.ino ..\myWifi.ino
 
 C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\cores\esp8266/Arduino.h:
 
@@ -198,6 +199,8 @@ C:\Program\ Files\sloeber\arduinoPlugin\libraries\CapacitiveSensor\0.5.1/Capacit
 
 ..\myTimer.h:
 
+..\jeedom.h:
+
 ..\Eggstia.ino:
 
 ..\HTU21D_Humidity_Temperature.ino:
@@ -209,6 +212,8 @@ C:\Program\ Files\sloeber\arduinoPlugin\libraries\CapacitiveSensor\0.5.1/Capacit
 ..\buildConf.ino:
 
 ..\capacitiveTouch.ino:
+
+..\jeedom.ino:
 
 ..\myTimer.ino:
 

@@ -210,11 +210,15 @@ void setup()
 	//RGB_LED_set_blue();
 	//delay(1000);
 
+	setJeedom(ROOM_CONF);
 
 	setup_HTU21D();
 	//setup_capacitiveSensor();
 
+
 	loop_readingSensors();
+
+	setup_wifi();
 
 	thread_readingSensors.enabled = true;
 	thread_readingUserInteract.enabled = true;
