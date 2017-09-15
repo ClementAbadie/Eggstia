@@ -153,7 +153,7 @@ void loop_dataSend(){
 
 void loop_timer(){
 #ifdef DEBUG
-	Serial.println("loop_timer");
+	//Serial.println("loop_timer");
 #endif
 	callback_timer();
 }

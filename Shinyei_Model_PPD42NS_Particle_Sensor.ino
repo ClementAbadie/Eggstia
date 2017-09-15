@@ -19,7 +19,7 @@
 
 void loop_PPD42NS() {
 
-	duration = pulseIn(pin, LOW);
+	duration = pulseIn(PIN_PPD42NS, LOW);
 	lowpulseoccupancy = lowpulseoccupancy+duration;
 	currenttime = millis()-starttime;
 

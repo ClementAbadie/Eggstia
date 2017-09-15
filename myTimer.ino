@@ -23,6 +23,9 @@ void setup_timer()
 
 void callback_timer()
 {
+
+	//Called every 1 SECOND
+
 	if(timeout_capacitive_switch > 0)
 	{
 		timeout_capacitive_switch--;

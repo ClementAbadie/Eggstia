@@ -34,9 +34,11 @@ void loop_datasend(int virtual_device_ID, float virtual_device_value)
 {
 
 	int wifi_connected = WiFi.isConnected();
-/*
+
 	Serial.print("WiFi isConnected : ");
 	Serial.println(WiFi.isConnected());
+
+	/*
 	Serial.print("WiFi status : ");
 	Serial.println(WiFi.status());
 */
