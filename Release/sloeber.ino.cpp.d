@@ -65,7 +65,8 @@ sloeber.ino.cpp.o: ..\sloeber.ino.cpp \
  ..\myTimer.h ..\jeedom.h ..\Eggstia.ino \
  ..\HTU21D_Humidity_Temperature.ino ..\RGB_LED.ino \
  ..\Shinyei_Model_PPD42NS_Particle_Sensor.ino ..\buildConf.ino \
- ..\capacitiveTouch.ino ..\jeedom.ino ..\myTimer.ino ..\myWifi.ino
+ ..\capacitiveTouch.ino ..\i2c_tools.ino ..\jeedom.ino ..\myTimer.ino \
+ ..\myWifi.ino
 
 C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\cores\esp8266/Arduino.h:
 
@@ -212,6 +213,8 @@ C:\Program\ Files\sloeber\arduinoPlugin\libraries\CapacitiveSensor\0.5.1/Capacit
 ..\buildConf.ino:
 
 ..\capacitiveTouch.ino:
+
+..\i2c_tools.ino:
 
 ..\jeedom.ino:
 

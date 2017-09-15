@@ -32,6 +32,7 @@
 //#include "HTU21D.h"
 #include <Adafruit_HTU21DF.h>
 
+
 #define HTU21D_HUMIDITY_CORRECTION_RAMP 1.0
 #define HTU21D_HUMIDITY_CORRECTION_OFFSET 0.0
 #define HTU21D_TEMPERATURE_CORRECTION_RAMP 1.0
@@ -39,12 +40,14 @@
 
 
 //Create an instance of the object
-Adafruit_HTU21DF myHumidity;
+Adafruit_HTU21DF myHTU21DF;
 
 float value_temperature = 0.0;
 float value_humidity = 0.0;
 
 void setup_HTU21D();
+
+int check_HTU21D();
 
 void loop_HTU21D();
 

@@ -57,6 +57,11 @@ void loop_readingSensors(){
 	Serial.println("loop_readingSensors");
 #endif
 	loop_PPD42NS();
+
+	if(!check_HTU21D())
+	{
+		setup_HTU21D();
+	}
 	loop_HTU21D();
 }
 
@@ -147,6 +152,10 @@ void loop_dataSend(){
 	Serial.println("loop_dataSend");
 #endif
 
+	if(!check_wifi()){
+		setup_wifi();
+	}
+
 	loop_datasend(JEEDOM_VIRTUAL_TEMPERATURE_ID,value_temperature);
 	loop_datasend(JEEDOM_VIRTUAL_HUMIDITY_ID,value_humidity);
 }
@@ -212,13 +221,13 @@ void setup()
 
 	setJeedom(ROOM_CONF);
 
-	setup_HTU21D();
+	//setup_HTU21D();
 	//setup_capacitiveSensor();
 
 
 	loop_readingSensors();
 
-	setup_wifi();
+	//setup_wifi();
 
 	thread_readingSensors.enabled = true;
 	thread_readingUserInteract.enabled = true;

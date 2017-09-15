@@ -18,6 +18,7 @@ const char* password = "QY3XW4EDHDU4";
 
 
 void setup_wifi();
+int check_wifi();
 
 void loop_datasend(int virtual_device_ID, int virtual_device_value);
 

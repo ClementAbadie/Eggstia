@@ -30,22 +30,24 @@ void setup_wifi() {
 
 }
 
-void loop_datasend(int virtual_device_ID, float virtual_device_value)
-{
+int check_wifi(){
 
 	int wifi_connected = WiFi.isConnected();
 
-	Serial.print("WiFi isConnected : ");
-	Serial.println(WiFi.isConnected());
+	Serial.print("check_wifi : ");
+	Serial.println(wifi_connected);
 
 	/*
 	Serial.print("WiFi status : ");
 	Serial.println(WiFi.status());
 */
 
-	if(!wifi_connected){
-		setup_wifi();
-	}
+	return wifi_connected;
+
+}
+
+void loop_datasend(int virtual_device_ID, float virtual_device_value)
+{
 
 	HTTPClient http;    //Declare object of class HTTPClient
 
