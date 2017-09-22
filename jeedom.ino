@@ -7,7 +7,7 @@
 
 #include "jeedom.h"
 
-void setJeedom(int ROOM) {
+void setup_Jeedom(Eggstia &thisEggstia) {
 	// TODO Auto-generated constructor stub
 
 
@@ -15,16 +15,19 @@ void setJeedom(int ROOM) {
 	JEEDOM_HOST = "192.168.0.190";
 
 
-	switch(ROOM)
+	switch(thisEggstia.room.id)
 	{
 	case ROOM_DEV_e:
-		JEEDOM_VIRTUAL_TEMPERATURE_ID = 320;
-		JEEDOM_VIRTUAL_HUMIDITY_ID = 321;
-
+		thisEggstia.temperature.jeedom_id = 320;
+		thisEggstia.humidity.jeedom_id = 321;
+		thisEggstia.pressure.jeedom_id = 0;
+		thisEggstia.airQuality.airNote.jeedom_id = 322;
 		break;
 	case ROOM_BEDROOM_1_e:
-		JEEDOM_VIRTUAL_TEMPERATURE_ID = 227;
-		JEEDOM_VIRTUAL_HUMIDITY_ID = 228;
+		thisEggstia.temperature.jeedom_id = 227;
+		thisEggstia.humidity.jeedom_id = 228;
+		thisEggstia.pressure.jeedom_id = 0;
+		thisEggstia.airQuality.airNote.jeedom_id = 0;
 		break;
 	}
 

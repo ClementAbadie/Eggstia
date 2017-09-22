@@ -1,55 +1,6 @@
-#include "Arduino.h"
-#include "Thread.h"
-#include "ThreadController.h"
-#include "StaticThreadController.h"
-#include "Wire.h"
-
-#include "buildConf.h"
-#include "myWifi.h"
-#include "RGB_LED.h"
-#include "Shinyei_Model_PPD42NS_Particle_Sensor.h"
-#include "HTU21D_Humidity_Temperature.h"
-#include "capacitiveTouch.h"
+#include "Eggstia.h"
 
 
-// Values threshold
-
-#define THRESHOLD_TEMPERATURE_MIN 15.0
-#define THRESHOLD_TEMPERATURE_MAX 25.0
-#define THRESHOLD_HUMIDITY_MIN 30
-#define THRESHOLD_HUMIDITY_MAX 70
-#define THRESHOLD_NOTE_MIN 0
-#define THRESHOLD_NOTE_MAX 10
-
-// LED mode change times
-
-#define RGB_LED_SHOW_MODE_TIME 1000
-#define RGB_LED_SHOW_BLACK_TIME 100
-
-// THREADS
-
-#define THREAD_DEFAULT_INTERVAL 10
-Thread myThread = Thread();
-
-Thread thread_readingSensors = Thread();
-Thread thread_readingUserInteract = Thread();
-Thread thread_settingLED = Thread();
-Thread thread_dataSend = Thread();
-Thread thread_timer = Thread();
-
-ThreadController threadController = ThreadController();
-
-enum LED_STATUS_t {
-	LED_STATUS_TEMPERATURE_e,
-	LED_STATUS_HUMIDITY_e,
-	LED_STATUS_AIRNOTE_e,
-	LED_STATUS_GLOBAL_NOTE_e
-};
-
-
-
-LED_STATUS_t led_status = LED_STATUS_TEMPERATURE_e;
-LED_STATUS_t led_status_old = led_status;
 
 
 void loop_readingSensors(){
@@ -58,11 +9,11 @@ void loop_readingSensors(){
 #endif
 	loop_PPD42NS();
 
-	if(!check_HTU21D())
+	if(!check_HTU21D(thisEggstia.temperature, thisEggstia.humidity))
 	{
 		setup_HTU21D();
 	}
-	loop_HTU21D();
+	loop_HTU21D(thisEggstia.temperature, thisEggstia.humidity);
 }
 
 void loop_readingUserInteract(){
@@ -73,77 +24,13 @@ void loop_readingUserInteract(){
 	loop_capacitiveSensor();
 }
 
-void loop_RGB_LED(){
+void loop_writeUserInteract(){
 #ifdef DEBUG
-	Serial.println("loop_RGB_LED");
+	Serial.println("loop_readingUserInteract");
 #endif
 
-	if(led_status != led_status_old)
-	{
-		led_status_old = led_status;
-		timeout_led = RGB_LED_SHOW_MODE_TIME + 3 * RGB_LED_SHOW_BLACK_TIME;
-	}
-
-	if(timeout_led == 0)
-	{
-
-		switch ( switch_status ) {
-		case SWITCH_STATUS_ON_e:
-			switch ( led_status ) {
-			case LED_STATUS_TEMPERATURE_e:
-				RGB_LED_display_value_RGB(value_temperature, (float) THRESHOLD_TEMPERATURE_MIN, (float) THRESHOLD_TEMPERATURE_MAX);
-				break;
-			case LED_STATUS_HUMIDITY_e:
-				RGB_LED_display_value_RGB(value_humidity, (float) THRESHOLD_HUMIDITY_MIN, (float) THRESHOLD_HUMIDITY_MAX);
-				break;
-			case LED_STATUS_AIRNOTE_e:
-				RGB_LED_display_value(value_airNote, (float) THRESHOLD_NOTE_MIN, (float) THRESHOLD_NOTE_MAX, LED_COLOR_R_e, LED_COLOR_G_e);
-				break;
-			case LED_STATUS_GLOBAL_NOTE_e:
-				RGB_LED_display_value(tools_GlobalNoteCalculator(), (float) THRESHOLD_NOTE_MIN, (float) THRESHOLD_NOTE_MAX, LED_COLOR_R_e,LED_COLOR_G_e);
-				break;
-			default:
-				// Code
-				break;
-			}
-			break;
-			case SWITCH_STATUS_OFF_e:
-				RGB_LED_set_black();
-				break;
-			default:
-				// Code
-				break;
-		}
-	}
-	else if ((timeout_led < RGB_LED_SHOW_BLACK_TIME)
-			|| (timeout_led < 3 * RGB_LED_SHOW_BLACK_TIME && timeout_led > 2 * RGB_LED_SHOW_BLACK_TIME )
-			|| (timeout_led > RGB_LED_SHOW_MODE_TIME + 2 * RGB_LED_SHOW_BLACK_TIME))
-	{
-		RGB_LED_set_black();
-	}
-	else
-	{
-		switch ( led_status ) {
-		case LED_STATUS_TEMPERATURE_e:
-			RGB_LED_set_red();
-			break;
-		case LED_STATUS_HUMIDITY_e:
-			RGB_LED_set_blue();
-			break;
-		case LED_STATUS_AIRNOTE_e:
-			RGB_LED_set_green();
-			break;
-		case LED_STATUS_GLOBAL_NOTE_e:
-			RGB_LED_set_white();
-			break;
-		default:
-			// Code
-			break;
-		}
-	}
+	loop_RGB_LED(thisEggstia);
 }
-
-
 
 
 
@@ -156,8 +43,7 @@ void loop_dataSend(){
 		setup_wifi();
 	}
 
-	loop_datasend(JEEDOM_VIRTUAL_TEMPERATURE_ID,value_temperature);
-	loop_datasend(JEEDOM_VIRTUAL_HUMIDITY_ID,value_humidity);
+	loop_datasend(thisEggstia);
 }
 
 void loop_timer(){
@@ -169,30 +55,7 @@ void loop_timer(){
 
 
 
-int tools_GlobalNoteCalculator(){
 
-	//TODO : Note calcul of hum and temp : MED is the best
-	int VALUE_TEMPERATURE_255 =  ( (int) value_temperature - THRESHOLD_TEMPERATURE_MIN ) * 255 / THRESHOLD_TEMPERATURE_MAX;
-	int VALUE_HUMIDITY_255 =  ( (int) value_humidity - THRESHOLD_HUMIDITY_MIN ) * 255 / THRESHOLD_HUMIDITY_MAX;
-	int VALUE_AIR_NOTE_255 =  ( (int) value_airNote - THRESHOLD_NOTE_MIN ) * 255 / THRESHOLD_NOTE_MAX;
-
-	int VALUE_GLOBAL_NOTE_255 =  (VALUE_TEMPERATURE_255 + VALUE_HUMIDITY_255 + VALUE_AIR_NOTE_255)/3;
-
-	int VALUE_GLOBAL_NOTE =  VALUE_GLOBAL_NOTE_255 * 10 / 255;
-
-#ifdef DEBUG
-	Serial.print("Global Note : ");
-	Serial.print(VALUE_GLOBAL_NOTE_255);
-	Serial.print("(");
-	Serial.print(VALUE_GLOBAL_NOTE);
-	Serial.print("/");
-	Serial.print(THRESHOLD_NOTE_MAX);
-	Serial.println(")");
-#endif
-
-	return VALUE_GLOBAL_NOTE;
-
-}
 
 
 //The setup function is called once at startup of the sketch
@@ -212,18 +75,14 @@ void setup()
 	Serial.println("Setting up...");
 #endif
 
-	Wire.pins(5, 4);
-
 	//setup_RGB_LED();
 
 	//RGB_LED_set_blue();
 	//delay(1000);
 
-	setJeedom(ROOM_CONF);
+	setup_Jeedom(thisEggstia);
 
-	//setup_HTU21D();
 	//setup_capacitiveSensor();
-
 
 	loop_readingSensors();
 
@@ -245,7 +104,7 @@ void setup()
 	thread_timer.onRun(loop_timer);
 	thread_readingSensors.onRun(loop_readingSensors);
 	thread_readingUserInteract.onRun(loop_readingUserInteract);
-	thread_settingLED.onRun(loop_RGB_LED);
+	thread_settingLED.onRun(loop_writeUserInteract);
 	thread_dataSend.onRun(loop_dataSend);
 
 	threadController.add(&thread_timer);
@@ -254,17 +113,6 @@ void setup()
 //	threadController.add(&thread_settingLED);
 	threadController.add(&thread_dataSend);
 
-
-
-//	RGB_LED_set_black();
-//	delay(RGB_LED_SHOW_BLACK_TIME);
-//	RGB_LED_set_green();
-//	delay(RGB_LED_SHOW_BLACK_TIME);
-//	RGB_LED_set_black();
-//	delay(RGB_LED_SHOW_BLACK_TIME);
-//	RGB_LED_set_green();
-//	delay(RGB_LED_SHOW_BLACK_TIME);
-//	RGB_LED_set_black();
 
 
 #ifdef DEBUG
@@ -277,13 +125,14 @@ void loop()
 {
 	//Add your repeated code here
 #ifdef DEBUG
-	//Serial.println("loop_main");
-	//delay(100);
+
+
 #endif
 
 #ifdef TEST
-	RGB_LED_display_value_RGB(19.9, (float) THRESHOLD_TEMPERATURE_MIN, (float) THRESHOLD_TEMPERATURE_MAX);
-	delay(990);
+
+
+
 #else
 	threadController.run();
 #endif

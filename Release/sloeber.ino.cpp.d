@@ -31,11 +31,11 @@ sloeber.ino.cpp.o: ..\sloeber.ino.cpp \
  C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\cores\esp8266/debug.h \
  C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\variants\generic/pins_arduino.h \
  C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\variants\generic/common.h \
+ ..\Eggstia.h \
  C:\Program\ Files\sloeber\arduinoPlugin\libraries\ArduinoThread\2.1.1/Thread.h \
  C:\Program\ Files\sloeber\arduinoPlugin\libraries\ArduinoThread\2.1.1/ThreadController.h \
  C:\Program\ Files\sloeber\arduinoPlugin\libraries\ArduinoThread\2.1.1/StaticThreadController.h \
- C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\libraries\Wire/Wire.h \
- ..\buildConf.h ..\myWifi.h \
+ ..\buildConf.h ..\myWifi.h ..\dataTools.h \
  C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\libraries\ESP8266HTTPClient\src/ESP8266HTTPClient.h \
  C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\libraries\ESP8266WiFi\src/WiFiClient.h \
  C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\cores\esp8266/Print.h \
@@ -59,14 +59,15 @@ sloeber.ino.cpp.o: ..\sloeber.ino.cpp \
  C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\libraries\ESP8266WiFi\src/include/ssl.h \
  ..\RGB_LED.h ..\Shinyei_Model_PPD42NS_Particle_Sensor.h \
  ..\HTU21D_Humidity_Temperature.h \
+ C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\libraries\Wire/Wire.h \
  C:\Program\ Files\sloeber\arduinoPlugin\libraries\Adafruit_HTU21DF_Library\1.0.1/Adafruit_HTU21DF.h \
  ..\capacitiveTouch.h \
  C:\Program\ Files\sloeber\arduinoPlugin\libraries\CapacitiveSensor\0.5.1/CapacitiveSensor.h \
  ..\myTimer.h ..\jeedom.h ..\Eggstia.ino \
  ..\HTU21D_Humidity_Temperature.ino ..\RGB_LED.ino \
  ..\Shinyei_Model_PPD42NS_Particle_Sensor.ino ..\buildConf.ino \
- ..\capacitiveTouch.ino ..\i2c_tools.ino ..\jeedom.ino ..\myTimer.ino \
- ..\myWifi.ino
+ ..\capacitiveTouch.ino ..\dataTools.ino ..\i2c_tools.ino ..\jeedom.ino \
+ ..\myTimer.ino ..\myWifi.ino
 
 C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\cores\esp8266/Arduino.h:
 
@@ -132,17 +133,19 @@ C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\
 
 C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\variants\generic/common.h:
 
+..\Eggstia.h:
+
 C:\Program\ Files\sloeber\arduinoPlugin\libraries\ArduinoThread\2.1.1/Thread.h:
 
 C:\Program\ Files\sloeber\arduinoPlugin\libraries\ArduinoThread\2.1.1/ThreadController.h:
 
 C:\Program\ Files\sloeber\arduinoPlugin\libraries\ArduinoThread\2.1.1/StaticThreadController.h:
 
-C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\libraries\Wire/Wire.h:
-
 ..\buildConf.h:
 
 ..\myWifi.h:
+
+..\dataTools.h:
 
 C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\libraries\ESP8266HTTPClient\src/ESP8266HTTPClient.h:
 
@@ -192,6 +195,8 @@ C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\
 
 ..\HTU21D_Humidity_Temperature.h:
 
+C:\Program\ Files\sloeber\arduinoPlugin\packages\esp8266\hardware\esp8266\2.3.0\libraries\Wire/Wire.h:
+
 C:\Program\ Files\sloeber\arduinoPlugin\libraries\Adafruit_HTU21DF_Library\1.0.1/Adafruit_HTU21DF.h:
 
 ..\capacitiveTouch.h:
@@ -213,6 +218,8 @@ C:\Program\ Files\sloeber\arduinoPlugin\libraries\CapacitiveSensor\0.5.1/Capacit
 ..\buildConf.ino:
 
 ..\capacitiveTouch.ino:
+
+..\dataTools.ino:
 
 ..\i2c_tools.ino:
 

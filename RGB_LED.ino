@@ -8,12 +8,97 @@
 #include "RGB_LED.h"
 
 
+//	RGB_LED_set_black();
+//	delay(RGB_LED_SHOW_BLACK_TIME);
+//	RGB_LED_set_green();
+//	delay(RGB_LED_SHOW_BLACK_TIME);
+//	RGB_LED_set_black();
+//	delay(RGB_LED_SHOW_BLACK_TIME);
+//	RGB_LED_set_green();
+//	delay(RGB_LED_SHOW_BLACK_TIME);
+//	RGB_LED_set_black();
+
+
 void setup_RGB_LED()
 {
 	pinMode(RGB_LED_PIN_R, OUTPUT);
 	pinMode(RGB_LED_PIN_G, OUTPUT);
 	pinMode(RGB_LED_PIN_B, OUTPUT);
 }
+
+
+
+void loop_RGB_LED(Eggstia& thisEggstia){
+#ifdef DEBUG
+	Serial.println("loop_RGB_LED");
+#endif
+
+	if(led_status != led_status_old)
+	{
+		led_status_old = led_status;
+		timeout_led = RGB_LED_SHOW_MODE_TIME + 3 * RGB_LED_SHOW_BLACK_TIME;
+	}
+
+	if(timeout_led == 0)
+	{
+
+		switch ( switch_status ) {
+		case SWITCH_STATUS_ON_e:
+			switch ( led_status ) {
+			case LED_STATUS_TEMPERATURE_e:
+				RGB_LED_display_value_RGB(thisEggstia.temperature.value, thisEggstia.temperature.threshold_min, thisEggstia.temperature.threshold_max);
+				break;
+			case LED_STATUS_HUMIDITY_e:
+				RGB_LED_display_value_RGB(thisEggstia.humidity.value, thisEggstia.humidity.threshold_min, thisEggstia.humidity.threshold_max);
+				break;
+			case LED_STATUS_AIRNOTE_e:
+				RGB_LED_display_value(thisEggstia.airQuality.airNote.value, thisEggstia.airQuality.airNote.threshold_min, thisEggstia.airQuality.airNote.threshold_max, LED_COLOR_R_e, LED_COLOR_G_e);
+				break;
+			case LED_STATUS_GLOBAL_NOTE_e:
+				RGB_LED_display_value(tools_GlobalNoteCalculator(thisEggstia), thisEggstia.humidity.threshold_min, thisEggstia.humidity.threshold_max, LED_COLOR_R_e,LED_COLOR_G_e);
+				break;
+			default:
+				// Code
+				break;
+			}
+			break;
+			case SWITCH_STATUS_OFF_e:
+				RGB_LED_set_black();
+				break;
+			default:
+				// Code
+				break;
+		}
+	}
+	else if ((timeout_led < RGB_LED_SHOW_BLACK_TIME)
+			|| (timeout_led < 3 * RGB_LED_SHOW_BLACK_TIME && timeout_led > 2 * RGB_LED_SHOW_BLACK_TIME )
+			|| (timeout_led > RGB_LED_SHOW_MODE_TIME + 2 * RGB_LED_SHOW_BLACK_TIME))
+	{
+		RGB_LED_set_black();
+	}
+	else
+	{
+		switch ( led_status ) {
+		case LED_STATUS_TEMPERATURE_e:
+			RGB_LED_set_red();
+			break;
+		case LED_STATUS_HUMIDITY_e:
+			RGB_LED_set_blue();
+			break;
+		case LED_STATUS_AIRNOTE_e:
+			RGB_LED_set_green();
+			break;
+		case LED_STATUS_GLOBAL_NOTE_e:
+			RGB_LED_set_white();
+			break;
+		default:
+			// Code
+			break;
+		}
+	}
+}
+
+
 
 void RGB_LED_raw_set(int R, int G, int B)
 {

@@ -17,10 +17,11 @@
 
 void setup_timer()
 {
-	//userTimer.initialize(1000);         // initialize and set a 1/2 second period
-	//userTimer.attachInterrupt(&callback_timer);  // attaches callback() as a timer overflow interrupt
+
 }
 
+//userTimer.initialize(1000);         // initialize and set a 1/2 second period
+//userTimer.attachInterrupt(&callback_timer);  // attaches callback() as a timer overflow interrupt
 void callback_timer()
 {
 

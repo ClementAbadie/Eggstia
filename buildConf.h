@@ -20,7 +20,7 @@ enum ROOM_t {
 };
 
 
-#define ROOM_CONF ROOM_BEDROOM_1_e
+#define ROOM_CONF ROOM_DEV_e
 
 
 #endif /* BUILDCONF_H_ */

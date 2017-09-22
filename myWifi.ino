@@ -46,9 +46,17 @@ int check_wifi(){
 
 }
 
-void loop_datasend(int virtual_device_ID, float virtual_device_value)
+void loop_datasend(Eggstia& thisEggstia)
 {
+	if(thisEggstia.temperature.enable){datasend(thisEggstia.temperature.jeedom_id,thisEggstia.temperature.value);}
+	if(thisEggstia.humidity.enable){datasend(thisEggstia.humidity.jeedom_id,thisEggstia.humidity.value);}
+	if(thisEggstia.pressure.enable){datasend(thisEggstia.pressure.jeedom_id,thisEggstia.pressure.value);}
+	if(thisEggstia.airQuality.airNote.enable){datasend(thisEggstia.airQuality.airNote.jeedom_id,thisEggstia.airQuality.airNote.value);}
+}
 
+
+void datasend(int virtual_device_ID, float virtual_device_value)
+{
 	HTTPClient http;    //Declare object of class HTTPClient
 
 	String url = 	"http://" + JEEDOM_HOST + "/core/api/jeeApi.php?apikey=" + JEEDOM_API +

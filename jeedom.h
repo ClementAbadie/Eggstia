@@ -16,6 +16,6 @@
 	int JEEDOM_VIRTUAL_TEMPERATURE_ID = 0;
 	int JEEDOM_VIRTUAL_HUMIDITY_ID = 0;
 
-	void setJeedom(int ROOM);
+	void setup_Jeedom(Eggstia &thisEggstia);
 
 #endif /* JEEDOM_H_ */
