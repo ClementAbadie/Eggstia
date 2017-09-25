@@ -7,13 +7,19 @@ void loop_readingSensors(){
 #ifdef DEBUG
 	Serial.println("loop_readingSensors");
 #endif
-	loop_PPD42NS();
-
 	if(!check_HTU21D(thisEggstia.temperature, thisEggstia.humidity))
 	{
 		setup_HTU21D();
 	}
 	loop_HTU21D(thisEggstia.temperature, thisEggstia.humidity);
+}
+
+void loop_readingSensorsAQ(){
+#ifdef DEBUG
+	//Serial.println("loop_readingSensorsAQ");
+#endif
+	loop_PPD42NS(thisEggstia);
+
 }
 
 void loop_readingUserInteract(){
@@ -81,6 +87,7 @@ void setup()
 	//delay(1000);
 
 	setup_Jeedom(thisEggstia);
+	setup_PPD42NS();
 
 	//setup_capacitiveSensor();
 
@@ -89,12 +96,14 @@ void setup()
 	//setup_wifi();
 
 	thread_readingSensors.enabled = true;
+	thread_readingSensorsAQ.enabled = true;
 	thread_readingUserInteract.enabled = true;
 	thread_settingLED.enabled = true;
 	thread_dataSend.enabled = true;
 	thread_timer.enabled = true;
 
 	thread_readingSensors.setInterval(10000);
+	thread_readingSensorsAQ.setInterval(10);
 	thread_readingUserInteract.setInterval(1);
 	thread_settingLED.setInterval(1);
 	thread_dataSend.setInterval(60 * 1000);
@@ -103,12 +112,14 @@ void setup()
 
 	thread_timer.onRun(loop_timer);
 	thread_readingSensors.onRun(loop_readingSensors);
+	thread_readingSensorsAQ.onRun(loop_readingSensorsAQ);
 	thread_readingUserInteract.onRun(loop_readingUserInteract);
 	thread_settingLED.onRun(loop_writeUserInteract);
 	thread_dataSend.onRun(loop_dataSend);
 
 	threadController.add(&thread_timer);
 	threadController.add(&thread_readingSensors);
+	threadController.add(&thread_readingSensorsAQ);
 //	threadController.add(&thread_readingUserInteract);
 //	threadController.add(&thread_settingLED);
 	threadController.add(&thread_dataSend);

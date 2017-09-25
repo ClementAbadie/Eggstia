@@ -2,7 +2,7 @@
 //This is a automatic generated file
 //Please do not modify this file
 //If you touch this file your change will be overwritten during the next build
-//This file has been generated on 2017-09-22 13:11:04
+//This file has been generated on 2017-09-25 09:32:50
 
 #include "Arduino.h"
 #include "Eggstia.h"
@@ -19,6 +19,7 @@
 #include "myWifi.h"
 
 void loop_readingSensors();
+void loop_readingSensorsAQ();
 void loop_readingUserInteract();
 void loop_writeUserInteract();
 void loop_dataSend();
@@ -43,7 +44,10 @@ void RGB_LED_set_white() ;
 void RGB_LED_set_orange() ;
 void RGB_LED_display_value(float VALUE, int MIN, int MAX, LED_COLOR_t MIN_COLOR, LED_COLOR_t MAX_COLOR);
 void RGB_LED_display_value_RGB(float VALUE, float MIN, float MAX);
-void loop_PPD42NS() ;
+int ugm32aqi_25 (double ugm3) ;
+int ugm32aqi_10 (double ugm3) ;
+void setup_PPD42NS() ;
+void loop_PPD42NS(Eggstia &myEggstia) ;
 void setup_capacitiveSensor() ;
 void loop_capacitiveSensor() ;
 void capacitiveSensor_shortTouch() ;

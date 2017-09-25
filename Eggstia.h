@@ -68,8 +68,13 @@ BasicPhysicalData airNote = {	false,	//enable
 AirQualityData AirQuality = {
 								0.0, 	//pm25_um3
 								0.0, 	//pm10_um3
+
+								0.0,	//note_25
 								0.0,	//note_10
-								0, 		//AQI
+								0.0,	//note_global
+
+								0,	//note_25
+								0,	//note_10
 								airNote
 							};
 
@@ -100,6 +105,7 @@ Eggstia thisEggstia = {	global,
 Thread myThread = Thread();
 
 Thread thread_readingSensors = Thread();
+Thread thread_readingSensorsAQ = Thread();
 Thread thread_readingUserInteract = Thread();
 Thread thread_settingLED = Thread();
 Thread thread_dataSend = Thread();

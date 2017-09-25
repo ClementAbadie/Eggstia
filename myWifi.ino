@@ -63,7 +63,11 @@ void datasend(int virtual_device_ID, float virtual_device_value)
 					"&type=virtual&id=" + String(virtual_device_ID) +
 					"&value=" + String(virtual_device_value);
 
-	Serial.println(url);
+	//Serial.println(url);
+	Serial.print("Send ");
+	Serial.print(virtual_device_value);
+	Serial.print(" to ID ");
+	Serial.println(virtual_device_ID);
 
 	http.begin(url);      //Specify request destination
 	http.addHeader("Content-Type", "text/plain");  //Specify content-type header
@@ -75,8 +79,10 @@ void datasend(int virtual_device_ID, float virtual_device_value)
 	//int httpCode = http.POST("Message from ESP8266");   //Send the request
 	payload = http.getString();                  //Get the response payload
 
-	Serial.println(httpCode);   //Print HTTP return code
-	Serial.println(payload);    //Print request response payload
+	//Serial.println(httpCode);   //Print HTTP return code
+	//Serial.println(payload);    //Print request response payload
+
+	if(!httpCode==200){Serial.println("Http error : " + httpCode);}
 
 	http.end();  //Close connection
 

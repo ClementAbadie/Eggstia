@@ -27,8 +27,13 @@ struct AirQualityData {
     float pm25_um3;
     float pm10_um3;
 
+    float note_25;
     float note_10;
-    int  AQI;
+    float note_global;
+
+    int  AQI_25;
+    int  AQI_10;
+
 
     BasicPhysicalData airNote;
 };
